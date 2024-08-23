@@ -20,33 +20,33 @@ class VectorStore(ABC):
     '''
     def __init__(self, config: Dict = {}) -> None:
         self.config = config
+
         self.dialect = self.config.get('dialect', 'SQL')
-        if "embedding_fucntion" in self.config:
+        if "embedding_function" in self.config:
             self.embedding_function = self.config.get('embedding_function')
         else:
             self.embedding_function = OpenAIEmbeddingsFunction(
                 api_key=self.config.get('api_key'),
                 base_url=self.config.get('base_url'),
-                model_name=self.config.get('embedding_model')
+                model_name=self.config.get('embedding_model', 'bge-m3')
             )
-        
+
         if "embedding_dim" in self.config:
             self.embedding_dim = self.config.get('embedding_dim')
         else:
-            self.embedding_dim = 1024
+            self.embedding_dim = len(self.embedding_function(["abc"])[0])
         self.top_k = self.config.get('top_k', 3)
-        self._create_collections()
 
     def _create_collections(self):
         self._create_sql_collections("sagsql")
         self._create_doc_collections("sagdoc")
         self._create_ddl_collections("sagddl")
 
-    def _create_sql_collections(self, collection_name: str):
+    def _create_sql_collections(self, name: str):
         pass
 
-    def _create_doc_collections(self, collection_name: str):
+    def _create_doc_collections(self, name: str):
         pass
 
-    def _create_ddl_collections(self, collection_name: str):
+    def _create_ddl_collections(self, name: str):
         pass

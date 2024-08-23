@@ -30,7 +30,6 @@ class OpenAIEmbeddingsFunction(EmbeddingFunction[Documents]):
             response = self.client.embeddings.create(
                 model = self.model_name,
                 input = input,
-                **self.kwargs
             )
         except Exception as e:
             raise RuntimeError(f"Error calling OpenAI Embeddings API: {e}")

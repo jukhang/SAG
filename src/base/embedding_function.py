@@ -11,10 +11,11 @@
 
 
 
+import numpy as np
 from tenacity import retry
 from typing import Union, List, cast, Dict, Any
 from typing import runtime_checkable, Protocol
-from base.types import D, Embeddings, OneOrMany
+from base.types import D, Embeddings, OneOrMany, Embedding
 
 
 def cast_embeddings(
